@@ -28,9 +28,16 @@ cleanup() {
 # VARS #
 ########
 
-IN_NORMAL_BAM=$1
-IN_TUMOR_BAM=$2
-OUT_VCF_DIR=$3
+if [[ $# -eq 0 ]]; then
+    SCRIPT_NAME=$(basename $0)
+    echo "${SCRIPT_NAME} normal.bam tumor.bam /out/directory/"
+fi
+
+# http://tldp.org/LDP/abs/html/parameter-substitution.html
+# With the ${1?Message} syntax prints Message when $1 is not set.
+IN_NORMAL_BAM=${1?Please provide normal.bam}
+IN_TUMOR_BAM=${2?Please provide tumor.bam}
+OUT_VCF_DIR=${3?Please provide /out/directory}
 
 IN_NORMAL_DIR=$(dirname ${IN_NORMAL_BAM})
 IN_TUMOR_DIR=$(dirname ${IN_TUMOR_BAM})
@@ -67,6 +74,5 @@ done
 ############
 # CLEAN UP #
 ############
-
 
 log "Finished"
